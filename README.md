@@ -9,7 +9,7 @@ A fully responsive restaurant landing page built with pure **HTML, CSS, and Java
 
 ## 📸 Preview
 
-![Foodies Website Preview](https://foodies-website-nu.vercel.app/preview.png)
+![Foodies Website Preview](preview.png)
 
 ---
 
