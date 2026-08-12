@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foodies - Good Food Choices</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --crimson: #9b2247;
+    --crimson-dark: #7a1a38;
+    --crimson-light: #c0395a;
+    --white: #ffffff;
+    --off-white: #fafaf8;
+    --light-gray: #f5f5f3;
+    --text-dark: #1a1a1a;
+    --text-mid: #4a4a4a;
+    --text-light: #7a7a7a;
+    --border: #e8e8e5;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+    background: var(--white);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+  }
+
+  .nav-logo {
+    background: var(--crimson);
+    color: var(--white);
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 6px 14px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-mid);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--crimson); }
+
+  .nav-cta {
+    background: var(--crimson);
+    color: var(--white);
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--crimson-dark); }
+
+  /* HERO */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    min-height: 88vh;
+    padding: 60px 5%;
+    gap: 60px;
+    background: var(--white);
+  }
+
+  .hero-text h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 4vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text-dark);
+    margin-bottom: 18px;
+  }
+
+  .hero-text p {
+    color: var(--text-light);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 32px;
+    max-width: 420px;
+  }
+
+  .btn-group { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--crimson);
+    color: var(--white);
+    padding: 12px 28px;
+    border-radius: 4px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: var(--crimson-dark); transform: translateY(-1px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--text-dark);
+    padding: 12px 28px;
+    border-radius: 4px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1.5px solid var(--border);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-outline:hover { border-color: var(--crimson); color: var(--crimson); }
+
+  .hero-images {
+    position: relative;
+    height: 420px;
+  }
+
+  .hero-img-main {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+  }
+
+  /* STATS */
+  .stats {
+    background: var(--crimson);
+    padding: 36px 5%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    text-align: center;
+  }
+
+  .stat-item h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .stat-item p {
+    color: rgba(255,255,255,0.75);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+  }
+
+  /* SECTIONS */
+  section { padding: 80px 5%; }
+
+  .section-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--crimson);
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--text-dark);
+    margin-bottom: 16px;
+  }
+
+  .section-desc {
+    color: var(--text-light);
+    font-size: 0.92rem;
+    line-height: 1.75;
+    max-width: 480px;
+  }
+
+  /* ABOUT SECTIONS */
+  .about-1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+    align-items: center;
+    background: var(--off-white);
+  }
+
+  .about-img {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+
+  .about-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+    align-items: center;
+  }
+
+  .checklist { list-style: none; margin: 24px 0 32px; display: flex; flex-direction: column; gap: 10px; }
+  .checklist li {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 0.9rem; color: var(--text-mid);
+  }
+  .checklist li::before {
+    content: '✓';
+    width: 22px; height: 22px;
+    background: var(--crimson);
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+  }
+
+  .about-2-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 200px 200px;
+    gap: 12px;
+  }
+
+  .about-2-images img {
+    width: 100%; height: 100%; object-fit: cover; border-radius: 10px;
+  }
+
+  .about-2-images img:first-child {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+    height: 412px;
+  }
+
+  /* QUOTE BANNER */
+  .quote-banner {
+    background: var(--light-gray);
+    text-align: center;
+    padding: 60px 10%;
+  }
+
+  .quote-banner blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.3rem, 2.5vw, 2rem);
+    color: var(--crimson);
+    font-style: italic;
+    line-height: 1.4;
+    margin-bottom: 20px;
+  }
+
+  .quote-banner p {
+    color: var(--text-light);
+    font-size: 0.88rem;
+    margin-bottom: 28px;
+  }
+
+  /* MENU */
+  .menu { background: var(--white); text-align: center; }
+  .menu .section-title { margin: 0 auto 10px; }
+  .menu .section-desc { margin: 0 auto 48px; }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    text-align: left;
+  }
+
+  .menu-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: box-shadow 0.25s, transform 0.2s;
+    cursor: pointer;
+  }
+  .menu-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.1); transform: translateY(-3px); }
+
+  .menu-card img {
+    width: 100%; height: 220px; object-fit: cover;
+  }
+
+  .menu-card-body { padding: 18px 20px 20px; }
+  .menu-card-body h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .menu-meta {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-bottom: 12px;
+  }
+
+  .menu-price {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+  }
+
+  .price-old {
+    font-size: 0.95rem;
+    color: var(--text-light);
+    text-decoration: line-through;
+  }
+
+  .price-new {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--crimson);
+  }
+
+  /* TESTIMONIAL */
+  .testimonials {
+    background: var(--crimson);
+    text-align: center;
+    padding: 70px 5%;
+  }
+
+  .testimonials .section-title { color: var(--white); margin: 0 auto 40px; }
+
+  .testimonial-card {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 44px 48px;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+  }
+
+  .testimonial-avatar {
+    width: 56px; height: 56px;
+    border-radius: 50%; object-fit: cover;
+    margin: 0 auto 16px;
+    border: 3px solid var(--crimson);
+    background: var(--light-gray);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+
+  .testimonial-avatar svg { width: 32px; height: 32px; }
+
+  .testimonial-card p {
+    color: var(--text-mid);
+    font-size: 0.95rem;
+    line-height: 1.75;
+    font-style: italic;
+    margin-bottom: 18px;
+  }
+
+  .testimonial-name { font-weight: 700; font-size: 0.9rem; color: var(--crimson); }
+  .testimonial-role { font-size: 0.8rem; color: var(--text-light); }
+
+  .testimonial-dots { margin-top: 28px; display: flex; justify-content: center; gap: 8px; }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.4); cursor: pointer; transition: background 0.2s;
+  }
+  .dot.active { background: white; }
+
+  /* FAQ */
+  .faq { background: var(--white); }
+  .faq .section-title { text-align: center; margin-bottom: 48px; }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .faq-item {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 18px 20px;
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .faq-question:hover { color: var(--crimson); }
+
+  .faq-icon {
+    width: 18px; height: 18px; flex-shrink: 0;
+    transition: transform 0.3s;
+    color: var(--crimson);
+  }
+
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+  .faq-answer {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.35s ease, padding 0.2s;
+    font-size: 0.85rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    padding: 0 20px;
+  }
+
+  .faq-item.open .faq-answer { max-height: 200px; padding: 0 20px 18px; }
+
+  /* BANNER */
+  .baked-banner {
+    background: url('https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1400&q=80') center/cover no-repeat;
+    position: relative;
+    padding: 48px 5%;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
+  }
+
+  .baked-banner::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0.5);
+  }
+
+  .baked-banner * { position: relative; }
+
+  .baked-banner h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--white);
+    font-weight: 700;
+  }
+
+  /* NEWSLETTER */
+  .newsletter {
+    background: var(--white);
+    text-align: center;
+    padding: 80px 5%;
+  }
+
+  .newsletter h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .newsletter p { color: var(--text-light); font-size: 0.88rem; margin-bottom: 32px; }
+
+  .newsletter-form {
+    display: flex;
+    gap: 0;
+    max-width: 500px;
+    margin: 0 auto;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .newsletter-form input {
+    flex: 1;
+    padding: 13px 18px;
+    border: none;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    color: var(--text-dark);
+    background: var(--white);
+  }
+
+  .newsletter-form button {
+    background: var(--crimson);
+    color: var(--white);
+    border: none;
+    padding: 13px 24px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s;
+  }
+  .newsletter-form button:hover { background: var(--crimson-dark); }
+
+  /* FOOTER */
+  footer {
+    background: #1a1a1a;
+    color: rgba(255,255,255,0.6);
+    padding: 40px 5% 28px;
+    text-align: center;
+  }
+
+  .footer-links {
+    display: flex; justify-content: center; gap: 32px;
+    list-style: none; margin-bottom: 24px; flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    text-decoration: none;
+    color: rgba(255,255,255,0.55);
+    font-size: 0.82rem;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--white); }
+
+  .social-links {
+    display: flex; justify-content: center; gap: 16px; margin-bottom: 24px;
+  }
+
+  .social-link {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    font-size: 0.75rem;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .social-link:hover { border-color: var(--crimson); color: var(--crimson-light); }
+
+  .footer-copy { font-size: 0.78rem; }
+
+  /* UTILITY */
+  .text-center { text-align: center; }
+
+  @media (max-width: 768px) {
+    .hero, .about-1, .about-2 { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .menu-grid { grid-template-columns: 1fr; }
+    .faq-grid { grid-template-columns: 1fr; }
+    .hero-images { height: 280px; }
+    .about-2-images { grid-template-columns: 1fr; }
+    .about-2-images img:first-child { height: 220px; }
+    .nav-links { display: none; }
+  }
+
+  /* Fade-in on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Foodies</div>
+  <ul class="nav-links">
+    <li><a href="#about">About Us</a></li>
+    <li><a href="#recipes">Recipes & Food</a></li>
+    <li><a href="#blog">Our Blog</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#newsletter" class="nav-cta">Get Started</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text reveal">
+    <h1>Good food choices are good investments.</h1>
+    <p>Nourishing your body is the best gift you can give yourself. Explore wholesome, chef-crafted recipes made from the finest ingredients, delivered right to your kitchen.</p>
+    <div class="btn-group">
+      <a href="#menu" class="btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="white"/></svg>
+        Order Now
+      </a>
+      <a href="#about" class="btn-outline">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        View More
+      </a>
+    </div>
+  </div>
+  <div class="hero-images reveal">
+    <img
+      class="hero-img-main"
+      src="https://images.unsplash.com/photo-1543339308-43e59d6b73a6?w=900&q=80"
+      alt="Fresh colorful food bowls with vegetables and fruits"
+    />
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-item"><h3>775+</h3><p>Eateries</p></div>
+  <div class="stat-item"><h3>876+</h3><p>Recipes</p></div>
+  <div class="stat-item"><h3>775+</h3><p>Menus</p></div>
+  <div class="stat-item"><h3>776+</h3><p>Clients</p></div>
+</div>
+
+<!-- ABOUT 1 -->
+<section class="about-1" id="about">
+  <div class="reveal">
+    <img class="about-img"
+      src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80"
+      alt="Fresh ingredients in a bowl"
+    />
+  </div>
+  <div class="reveal">
+    <div class="section-label">Who We Are</div>
+    <h2 class="section-title">We Pride Ourselves On Making Real Food From The Best Ingredients.</h2>
+    <p class="section-desc">Our commitment to quality starts at the source. Every recipe is crafted using fresh, locally sourced ingredients that meet the highest standards — from farm to your table.</p>
+    <br><br>
+    <a href="#menu" class="btn-primary">Learn More</a>
+  </div>
+</section>
+
+<!-- ABOUT 2 -->
+<section class="about-2">
+  <div class="reveal">
+    <div class="section-label">Our Process</div>
+    <h2 class="section-title">We Make Everything By Hand With The Best Possible Ingredients.</h2>
+    <p class="section-desc">Handmade with love and care. Each dish is prepared fresh daily using traditional techniques and premium ingredients, ensuring the most authentic and flavorful experience.</p>
+    <ul class="checklist">
+      <li>Sourced from trusted local farms</li>
+      <li>Prepared daily with no preservatives</li>
+      <li>Every recipe crafted by expert chefs</li>
+    </ul>
+    <a href="#menu" class="btn-primary">Learn More</a>
+  </div>
+  <div class="about-2-images reveal">
+    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80" alt="Colorful food platter" />
+    <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&q=80" alt="Dessert and pastries" />
+    <img src="https://images.unsplash.com/photo-1432139509613-5c4255815697?w=600&q=80" alt="Grilled meat dish" />
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div class="quote-banner">
+  <blockquote>"When A Man's Stomach Is Full It Makes No Difference Whether He Is Rich Or Poor."</blockquote>
+  <p>A Euripides quote that has guided our philosophy since day one — good food belongs to everyone.</p>
+  <a href="#about" class="btn-primary">Read More</a>
+</div>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+  <div class="section-label text-center">Our Specialties</div>
+  <h2 class="section-title">Explore Our Foods</h2>
+  <p class="section-desc">Handpicked from our most loved dishes — made fresh daily with seasonal ingredients that bring every bite alive.</p>
+
+  <div class="menu-grid" style="margin-top: 48px;">
+    <div class="menu-card reveal">
+      <img src="https://images.unsplash.com/photo-1553909489-cd47e0907980?w=600&q=80" alt="Rainbow Vegetable Sandwich" />
+      <div class="menu-card-body">
+        <h4>Rainbow Vegetable Sandwich</h4>
+        <div class="menu-meta">Fresh · 35 Minutes · Serves 2</div>
+        <div class="menu-price">
+          <span class="price-old">$10.50</span>
+          <span class="price-new">$11.75</span>
+        </div>
+        <a href="#" class="btn-primary" style="font-size:0.8rem; padding:9px 18px;">Order Now</a>
+      </div>
+    </div>
+
+    <div class="menu-card reveal">
+      <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80" alt="Vegetarian Burger" />
+      <div class="menu-card-body">
+        <h4>Vegetarian Burger</h4>
+        <div class="menu-meta">Fresh · 20 Minutes · Serves 1</div>
+        <div class="menu-price">
+          <span class="price-old">$11.50</span>
+          <span class="price-new">$9.30</span>
+        </div>
+        <a href="#" class="btn-primary" style="font-size:0.8rem; padding:9px 18px;">Order Now</a>
+      </div>
+    </div>
+
+    <div class="menu-card reveal">
+      <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=600&q=80" alt="Raspberry Stuffed French Toast" />
+      <div class="menu-card-body">
+        <h4>Raspberry Stuffed French Toast</h4>
+        <div class="menu-meta">Fresh · 25 Minutes · Serves 2</div>
+        <div class="menu-price">
+          <span class="price-old">$14.50</span>
+          <span class="price-new">$12.50</span>
+        </div>
+        <a href="#" class="btn-primary" style="font-size:0.8rem; padding:9px 18px;">Order Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <h2 class="section-title" style="color:white;">Testimonial</h2>
+
+  <div class="testimonial-card">
+    <div class="testimonial-avatar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#9b2247" stroke-width="1.5">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+    </div>
+    <p id="testimonial-text">"Foodies has completely transformed the way I think about eating. The recipes are not only delicious but also incredibly easy to follow. The quality of ingredients they use is unmatched — every meal feels like a restaurant experience at home."</p>
+    <div class="testimonial-name" id="testimonial-name">Maisy Rice</div>
+    <div class="testimonial-role" id="testimonial-role">Fresh Chef — Loyal Member</div>
+  </div>
+
+  <div class="testimonial-dots">
+    <div class="dot active" onclick="setTestimonial(0)"></div>
+    <div class="dot" onclick="setTestimonial(1)"></div>
+    <div class="dot" onclick="setTestimonial(2)"></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <h2 class="section-title">Frequently Asked Questions</h2>
+  <div class="faq-grid">
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFAQ(this)">
+        Is Foodies Food Really Good For Your Daily Diet?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer">Yes! Our recipes are nutritionally balanced and designed by food scientists to support a healthy daily lifestyle. We focus on whole foods, natural ingredients, and optimal macronutrient ratios.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFAQ(this)">
+        Do You Take Bulk Catering And Party Orders?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer">Absolutely! We cater for events of all sizes. Contact our catering team at least 48 hours in advance to arrange your custom menu. Discounts apply for orders over 20 servings.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFAQ(this)">
+        Can I Create A Custom Delivery Order?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer">Of course! You can fully customize your order based on dietary preferences, allergies, portion sizes, and delivery schedule. Our app makes it seamless and quick.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFAQ(this)">
+        When Are You Opening A Shop Near Me?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </button>
+      <div class="faq-answer">We're expanding rapidly! Check our Locations page or subscribe to our newsletter to be the first to know when we launch in your city.</div>
+    </div>
+  </div>
+</section>
+
+<!-- BAKED BANNER -->
+<div class="baked-banner">
+  <h3>Baked Fresh Daily By Bakers With Passion.</h3>
+  <a href="#menu" class="btn-primary">Learn More</a>
+</div>
+
+<!-- NEWSLETTER -->
+<section class="newsletter" id="newsletter">
+  <h2>Hurry Up! Subscribe Our Newsletter And Get 25% Off</h2>
+  <p>Join thousands of food lovers who get exclusive recipes, tips, and discount codes delivered weekly.</p>
+  <div class="newsletter-form">
+    <input type="email" placeholder="Your email address..." />
+    <button onclick="subscribeNewsletter(this)">Subscribe</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <ul class="footer-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#menu">Our Menu</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <div class="social-links">
+    <a class="social-link" href="#" title="Facebook">f</a>
+    <a class="social-link" href="#" title="Twitter">t</a>
+    <a class="social-link" href="#" title="Instagram">in</a>
+    <a class="social-link" href="#" title="YouTube">▶</a>
+    <a class="social-link" href="#" title="Pinterest">p</a>
+  </div>
+  <p class="footer-copy">© 2024 Foodies. All rights reserved.</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // FAQ toggle
+  function toggleFAQ(btn) {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Testimonials
+  const testimonials = [
+    {
+      text: '"Foodies has completely transformed the way I think about eating. The recipes are not only delicious but also incredibly easy to follow. The quality of ingredients they use is unmatched — every meal feels like a restaurant experience at home."',
+      name: 'Maisy Rice',
+      role: 'Fresh Chef — Loyal Member'
+    },
+    {
+      text: '"I\'ve tried dozens of meal services, but nothing comes close to Foodies. The freshness of every ingredient is remarkable and you can taste the difference. My family looks forward to every delivery!"',
+      name: 'James Holloway',
+      role: 'Home Cook — Premium Subscriber'
+    },
+    {
+      text: '"Subscribing to Foodies was the best decision I made for my health journey. Every meal is balanced, flavourful, and satisfying. I\'ve recommended it to everyone in my office!"',
+      name: 'Priya Sharma',
+      role: 'Nutritionist — Brand Partner'
+    }
+  ];
+
+  let currentTestimonial = 0;
+
+  function setTestimonial(index) {
+    currentTestimonial = index;
+    const t = testimonials[index];
+    document.getElementById('testimonial-text').textContent = t.text;
+    document.getElementById('testimonial-name').textContent = t.name;
+    document.getElementById('testimonial-role').textContent = t.role;
+    document.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i === index);
+    });
+  }
+
+  // Auto-rotate testimonials
+  setInterval(() => {
+    setTestimonial((currentTestimonial + 1) % testimonials.length);
+  }, 5000);
+
+  // Newsletter submit
+  function subscribeNewsletter(btn) {
+    const input = btn.previousElementSibling;
+    if (!input.value || !input.value.includes('@')) {
+      input.style.outline = '2px solid #9b2247';
+      input.focus(); return;
+    }
+    btn.textContent = '✓ Subscribed!';
+    btn.style.background = '#2d7a3a';
+    input.value = '';
+    input.style.outline = '';
+    setTimeout(() => { btn.textContent = 'Subscribe'; btn.style.background = ''; }, 3000);
+  }
+</script>
+</body>
+</html>
