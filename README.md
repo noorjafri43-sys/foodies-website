@@ -3,14 +3,13 @@
 A fully responsive restaurant landing page built with pure **HTML, CSS, and JavaScript** — no frameworks, no dependencies.
 
 ## 🔗 Live Demo
-[View Live Site](https://yourusername.github.io/foodies-website)
+[View Live Site](https://foodies-website-nu.vercel.app)
 
 ---
 
 ## 📸 Preview
 
-![Foodies Website Preview](foodies-website-nu.vercel.app
-)
+![Foodies Website Preview](https://foodies-website-nu.vercel.app/preview.png)
 
 ---
 
